@@ -2,14 +2,34 @@
     "version": 2,
     "builds": [
       {
-        "src": "./server.js",
+        "src": "src/server.js",
         "use": "@vercel/node"
       }
     ],
     "routes": [
       {
+        "src": "/api/categories/(.*)",
+        "dest": "src/server.js"
+      },
+      {
+        "src": "/api/competitions/(.*)",
+        "dest": "src/server.js"
+      },
+      {
+        "src": "/api/events/(.*)",
+        "dest": "src/server.js"
+      },
+      {
+        "src": "/api/teams/(.*)",
+        "dest": "src/server.js"
+      },
+      {
+        "src": "/api/upload/(.*)",
+        "dest": "src/server.js"
+      },
+      {
         "src": "/(.*)",
-        "dest": "/server.js",
+        "dest": "src/server.js",
         "methods":["GET","POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
         "headers":{
             "Access-Control-Allow-Origin": "*"
