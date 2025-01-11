@@ -48,4 +48,5 @@ app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
 
-export default pool;
+export const db = pool;
+export default app;

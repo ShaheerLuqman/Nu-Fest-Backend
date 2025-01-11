@@ -1,9 +1,9 @@
-import pool from "../server.js";
+import { db } from "../server.js";
 
 // export const getTeams = async (req, res) => {
 //   const getTeamsQuery = `SELECT * FROM teams`;
 //   try {
-//     const result = await pool.query(getTeamsQuery);
+//     const result = await db.query(getTeamsQuery);
 //     res.status(200).json(result.rows);
 //   } catch (error) {
 //     res
@@ -60,7 +60,7 @@ export const addTeam = async (req, res) => {
     }
 
     // Check if the team already exists and participants as well
-    const teamExists = await pool.query(checkTeamQuery, [team_name, competition_id]);
+    const teamExists = await db.query(checkTeamQuery, [team_name, competition_id]);
     if (teamExists.rows.length > 0) {
       return res.status(305).json({ message: "Team already exists" });
     }
@@ -68,7 +68,7 @@ export const addTeam = async (req, res) => {
     if (participants && participants.length > 0) {
 
         const participantEmails = participants.map((p) => p.email);
-        const existingParticipants = await pool.query(checkParticipantQuery, [
+        const existingParticipants = await db.query(checkParticipantQuery, [
           participantEmails,
           competition_id,
         ]);
@@ -80,7 +80,7 @@ export const addTeam = async (req, res) => {
           });
         }
     }
-    const existingTeamLeader = await pool.query(teamLeaderExistsQuery, [
+    const existingTeamLeader = await db.query(teamLeaderExistsQuery, [
       team_leader.email.toLowerCase(),
       competition_id,
     ]);
@@ -93,7 +93,7 @@ export const addTeam = async (req, res) => {
     }
     
     // Step 1: Insert the team (without leader ID initially)
-    const teamResult = await pool.query(addTeamQuery, [
+    const teamResult = await db.query(addTeamQuery, [
       team_name,
       competition_id,
       payment_screenshot,
@@ -102,7 +102,7 @@ export const addTeam = async (req, res) => {
     const teamId = teamResult.rows[0].team_id;
 
     // Step 2: Add the team leader as a participant and retrieve their part_id
-    const leaderResult = await pool.query(addParticipantQuery, [
+    const leaderResult = await db.query(addParticipantQuery, [
       team_leader.name,
       team_leader.email,
       competition_id,
@@ -114,7 +114,7 @@ export const addTeam = async (req, res) => {
     console.log("competition_id:", competition_id);
 
     // Step 3: Update the team with the team leader ID
-    await pool.query(updateTeamLeaderQuery, [teamLeaderId, teamId]);
+    await db.query(updateTeamLeaderQuery, [teamLeaderId, teamId]);
 
     // Step 4: Add other participants
     if (participants && participants.length > 0) {
@@ -122,7 +122,7 @@ export const addTeam = async (req, res) => {
 
       for (const participant of participants) {
         const { name, email } = participant;
-        await pool.query(addParticipantQuery, [name, email, competition_id, teamId]);
+        await db.query(addParticipantQuery, [name, email, competition_id, teamId]);
       }
     }
 
