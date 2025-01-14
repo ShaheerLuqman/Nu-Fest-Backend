@@ -9,11 +9,10 @@ export const getCompetitions = async (req, res) => {
       c.date, 
       c.number_of_teams, 
       cat.name AS category_name,
-      c.imageurl,
       maxplayersperteam,
       minplayersperteam
-    FROM competition AS c
-    LEFT JOIN category AS cat ON c.category_id = cat.cat_id;
+    FROM nufest.competitions AS c
+    LEFT JOIN nufest.categories AS cat ON c.category_id = cat.cat_id;
   `;
 
   try {
@@ -35,8 +34,8 @@ export const getCompetitionCategory = async (req, res) => {
       c.date,
       c.number_of_teams,
       cat.name AS category_name
-    FROM competition AS c
-    JOIN category AS cat ON c.category_id = cat.cat_id where cat.name = $1;
+    FROM nufest.competitions AS c
+    JOIN nufest.categories AS cat ON c.category_id = cat.cat_id where cat.name = $1;
   `;
 
   try {

@@ -7,7 +7,8 @@ import teamRoutes from "./routes/teamRoutes.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
 import competitionRoutes from "./routes/competitionRoutes.js";
 import eventRoutes from "./routes/eventRoutes.js";
-import uploadRouter from "./controllers/uploadImage.js";
+import uploadRouter from './controllers/uploadImage.js';
+
 
 dotenv.config();
 const app = express();
@@ -29,8 +30,8 @@ pool.connect((err) => {
   }
 });
 
-// import { createTables } from "./db/db.js";
-// createTables(pool);
+//import { createTables } from "./db/db.js";
+//createTables(pool);
 
 app.get("/", (req, res) => {
   res.send("Hello Love");
@@ -41,7 +42,7 @@ app.use("/api/categories", categoryRoutes);
 //app.use("/api/participants", participantRoutes);
 app.use("/api/teams", teamRoutes);
 app.use("/api/events", eventRoutes);
-app.use("/api/image", uploadRouter);
+app.use('/api/image', uploadRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

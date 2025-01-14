@@ -8,7 +8,7 @@ export const getEvents = async (req, res) => {
         imageurl, 
         description,
         date
-      FROM event;
+      FROM nufest.events;
     `;
   try {
     const result = await pool.query(getEventQuery);
@@ -22,7 +22,7 @@ export const getEvents = async (req, res) => {
 export const getEventTickets = async (req, res) => {
   const getEventQuery = `
       SELECT 
-        count(*) as tickets_sold, event.name AS event_name from event join event_participant on event.id = event_participant.event_id group by event.name; 
+        count(*) as tickets_sold, event.name AS event_name from nufest.events as event join nufest.event_participants as event_participants on event.id = event_participants.event_id group by event.name; 
     `;
   try {
     const name = req.query.name;
@@ -40,13 +40,13 @@ export const getEventTickets = async (req, res) => {
 
 export const addEventParticipant = async (req, res) => {
   const insertParticipantQuery = `
-    INSERT INTO event_participant (name, email, phone, event_id, payment_screenshot)
+    INSERT INTO nufest.event_participants (name, email, phone, event_id, payment_screenshot)
     VALUES ($1, $2, $3, $4, $5)
     RETURNING id;
   `;
   const checkEmailQuery = `
     SELECT * 
-    FROM event_participant
+    FROM nufest.event_participants 
     WHERE email = $1 AND event_id = $2;
   `;
 

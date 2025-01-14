@@ -20,10 +20,9 @@ export const getCategoryName = async (req, res) => {
       c.description,
       c.date,
       c.number_of_teams,
-      c.imageurl,
       cat.name AS category_name
-    FROM competition AS c
-    JOIN categorie AS cat ON c.category_id = cat.cat_id where cat.name = $1;
+    FROM nufest.competitions AS c
+    JOIN nufest.categories AS cat ON c.category_id = cat.cat_id where cat.name = $1;
   `;
   try {
     const name = req.query.name;
