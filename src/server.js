@@ -10,14 +10,14 @@ import eventRoutes from "./routes/eventRoutes.js";
 import uploadRouter from "./controllers/uploadImage.js";
 //import bodyParser from "body-parser";
 
-
 dotenv.config();
 const app = express();
+app.use(cors());
 const PORT = process.env.PORT || 5000;
 app.use(express.json());
 //const apiUrl = process.env.testt || process.env.REACT_APP_API_URL || "http://localhost:5173";
 //app.use(cors({origin: apiUrl}));
-app.use(cors());
+
 //app.use(bodyParser.json());
 const connectionString = process.env.DBPORT;
 const { Pool } = pkg;
@@ -51,4 +51,4 @@ app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
 
-export default app;
+export default pool;
