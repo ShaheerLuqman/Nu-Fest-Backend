@@ -12,7 +12,9 @@ import uploadRouter from "./controllers/uploadImage.js";
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
-app.use(cors());
+app.use(cors({
+  origin: `${FrontEnd}`}));
+
 app.use(express.json());
 
 const connectionString = process.env.DBPORT;
