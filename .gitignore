@@ -2,6 +2,7 @@
 .DS_Store
 *.log
 *.env
+.env
 
 # Node.js dependencies
 node_modules/
