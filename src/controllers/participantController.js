@@ -1,4 +1,5 @@
-import pool from "../server.js";
+// import pool from "../server.js";
+import pool from "../db/connection.js";
 
 // export const addParticipant = async (req, res) => {
 //   //   const getCompetitionQuery = `SELECT * FROM participants WHERE name = $1`;
@@ -31,7 +32,6 @@ import pool from "../server.js";
 //   }
 // };
 
-
 // // FETCH WITH ID
 // export const getParticipant = async (req, res) => {
 //   const getParticipantQuery = `SELECT * FROM participants WHERE email = $1 and competition_id = $1`;
@@ -50,7 +50,6 @@ import pool from "../server.js";
 //       .json({ message: "Failed to get participant", error: error.message });
 //   }
 // };
-
 
 // // FETCH ALL
 // export const getAllParticipants = async (req, res) => {

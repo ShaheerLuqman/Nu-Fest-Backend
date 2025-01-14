@@ -1,4 +1,5 @@
-import pool from "../server.js";
+// import pool from "../server.js";
+import pool from "../db/connection.js";
 
 export const getEvents = async (req, res) => {
   const getEventQuery = `
@@ -73,7 +74,7 @@ export const addEventParticipant = async (req, res) => {
       email,
       phone,
       event_id,
-      payment_screenshot
+      payment_screenshot,
     ]);
 
     res.status(201).json({

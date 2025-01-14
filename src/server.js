@@ -1,7 +1,8 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import pkg from "pg";
+// import pkg from "pg";
+import pool from "./db/connection.js";
 import teamRoutes from "./routes/teamRoutes.js";
 //import participantRoutes from "./routes/participantRoutes.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
@@ -19,19 +20,19 @@ app.use(express.json());
 //app.use(cors({origin: apiUrl}));
 
 //app.use(bodyParser.json());
-const connectionString = process.env.DBPORT;
-const { Pool } = pkg;
+// const connectionString = process.env.DBPORT;
+// const { Pool } = pkg;
 
-const pool = new Pool({
-  connectionString,
-});
-pool.connect((err) => {
-  if (err) {
-    console.log("Error connecting to database", err);
-  } else {
-    console.log("Connected to database");
-  }
-});
+// const pool = new Pool({
+//   connectionString,
+// });
+// pool.connect((err) => {
+//   if (err) {
+//     console.log("Error connecting to database", err);
+//   } else {
+//     console.log("Connected to database");
+//   }
+// });
 
 // import { createTables } from "./db/db.js";
 // createTables(pool);
@@ -51,4 +52,4 @@ app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
 
-export default pool;
+export default app;

@@ -1,4 +1,4 @@
-import pool from "../server.js";
+import pool from "../db/connection.js";
 
 export const getCategories = async (req, res) => {
   const getCategoriesQuery = `SELECT * FROM nufest.categories`;

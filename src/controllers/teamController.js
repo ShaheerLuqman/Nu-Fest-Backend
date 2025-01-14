@@ -1,4 +1,5 @@
-import pool from "../server.js";
+// import pool from "../server.js";
+import pool from "../db/connection.js";
 
 // export const getTeams = async (req, res) => {
 //   const getTeamsQuery = `SELECT * FROM teams`;
