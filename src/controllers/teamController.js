@@ -124,17 +124,14 @@ export const addTeam = async (req, res) => {
         message: "Team Leader is already registered",
       });
     }
-
-    // Step 1: Insert the team (without leader ID initially)
     const teamResult = await pool.query(addTeamQuery, [
       team_name,
       competition_id,
       payment_screenshot,
       team_leader.phone,
     ]);
-    const teamId = teamResult.rows[0].team_id;
 
-    // Step 2: Add the team leader as a participant and retrieve their part_id
+    const teamId = teamResult.rows[0].team_id;
     const leaderResult = await pool.query(addParticipantQuery, [
       team_leader.name,
       team_leader.email,
@@ -142,6 +139,16 @@ export const addTeam = async (req, res) => {
       teamId,
     ]);
     const teamLeaderId = leaderResult.rows[0].part_id;
+
+    const updateTeamLeaderQuery = `
+      UPDATE team 
+      set team_leader_id = $1
+      where team_id = $2;
+      `;
+    await pool.query(updateTeamLeaderQuery, [teamLeaderId, teamId]);
+    // Step 1: Insert the team (without leader ID initially)
+
+    // Step 2: Add the team leader as a participant and retrieve their part_id
 
     console.log("participantEmails:", participants);
     console.log("competition_id:", competition_id);
