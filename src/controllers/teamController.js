@@ -171,9 +171,7 @@ export const addTeam = async (req, res) => {
 
     res.status(201).json({ message: "Team added successfully" });
   } catch (error) {
-    console.error("Error adding team:", error);
-    res
-      .status(500)
-      .json({ message: "Failed to add team", error: error.message });
+    // console.error("Error adding team:", error);
+    res.status(500).json({ message: "Failed to add team" });
   }
 };
